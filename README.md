@@ -1,4 +1,4 @@
-# file_loader
+# fileloader
 
 `fileloader` are functions for quickly loading files into lists. Supported types
 are `txt`, `jsonl/ndjson`, and `csv`.

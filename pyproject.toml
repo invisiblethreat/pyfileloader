@@ -1,5 +1,5 @@
 [project]
-name = "fileloader"
+name = "pyfileloader"
 version = "0.0.4"
 description = "Load common JSON formats quickly, CSV too."
 readme = "README.md"
@@ -19,6 +19,6 @@ classifiers = [
 ]
 
 [project.urls]
-homepage = "https://github.com/invisiblethreat/fileloader"
-documentation = "https://github.com/invisiblethreat/fileloader/README.md"
-repository = "https://github.com/invisiblethreat/fileloader"
+homepage = "https://github.com/invisiblethreat/pyfileloader"
+documentation = "https://github.com/invisiblethreat/pyfileloader/blob/main/README.md"
+repository = "https://github.com/invisiblethreat/pyfileloader"

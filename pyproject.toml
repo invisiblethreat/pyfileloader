@@ -1,6 +1,6 @@
 [project]
 name = "fileloader"
-version = "0.0.4j"
+version = "0.0.4"
 description = "Load common JSON formats quickly, CSV too."
 readme = "README.md"
 requires-python = ">=3.7"

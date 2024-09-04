@@ -1,7 +1,24 @@
 import csv
+import gzip
 import json
 import sys
-import gzip
+
+
+def detect_bom(file: str):
+    # Open the file in binary mode to read raw bytes
+    with open(file, "rb") as f:
+        # Read the first 4 bytes of the file
+        raw = f.read(4)
+
+    # Check for the BOM
+    if raw.startswith(b"\xef\xbb\xbf"):
+        return "UTF-8-SIG"
+    elif raw.startswith(b"\xff\xfe\x00\x00") or raw.startswith(b"\x00\x00\xfe\xff"):
+        return "UTF-32-SIG"
+    elif raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
+        return "UTF-16-SIG"
+    else:
+        return "UTF-8"
 
 
 def load_json(file: str):
@@ -47,8 +64,11 @@ def load_text(file: str):
     return items
 
 
-def load_csv(file: str):
-    openfn = open
+def load_csv(file: str, enc: str = ""):
+
+    # if the encoding isn't explicit
+    if enc = "":
+        enc = detect_bom(file)
 
     # the resulting binary stream when opening with gzip.open needs to be handled
     # in a different manner than the other functions
@@ -58,9 +78,9 @@ def load_csv(file: str):
         sys.exit(1)
 
     items = []
-    file_csv = csv.DictReader(openfn(file, "r"))
+    file_csv = csv.DictReader(open(file, mode="r", encoding=enc))
     for row in file_csv:
-        items.append(row.decode("UTF-8"))
+        items.append(row)
 
     return items
 

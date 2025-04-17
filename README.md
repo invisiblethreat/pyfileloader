@@ -1,7 +1,7 @@
 # fileloader
 
 `fileloader` are functions for quickly loading files into lists. Supported types
-are `txt`, `jsonl/ndjson`, and `csv`.
+are `txt`, `jsonl/ndjson`, and `csv`. JSON loading is there too, if needed(it returns a standard json.load(), so it's an object rather than a list of objects)
 
 ### Building
 

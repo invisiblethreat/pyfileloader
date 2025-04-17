@@ -1,10 +1,21 @@
+"""
+Lightweigth file reader for common API outputs
+"""
+
 import csv
 import gzip
 import json
 import sys
+from typing import Any, Union
+
+GZIP = ".gz"
 
 
-def detect_bom(file: str):
+def detect_bom(file: str) -> str:
+    """
+    Sometimes byte-order mode is messy, let's try to cover those cases
+    """
+
     # Open the file in binary mode to read raw bytes
     with open(file, "rb") as f:
         # Read the first 4 bytes of the file
@@ -13,18 +24,22 @@ def detect_bom(file: str):
     # Check for the BOM
     if raw.startswith(b"\xef\xbb\xbf"):
         return "UTF-8-SIG"
-    elif raw.startswith(b"\xff\xfe\x00\x00") or raw.startswith(b"\x00\x00\xfe\xff"):
+    if raw.startswith(b"\xff\xfe\x00\x00") or raw.startswith(b"\x00\x00\xfe\xff"):
         return "UTF-32-SIG"
-    elif raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
+    if raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
         return "UTF-16-SIG"
-    else:
-        return "UTF-8"
+
+    return "UTF-8"
 
 
-def load_json(file: str):
+def load_json(file: str) -> list[dict[str, Any]]:
+    """
+    Read and load JSON files
+    """
+
     openfn = open
     needs_decode = False
-    if file.endswith("gz"):
+    if file.endswith(GZIP):
         openfn = gzip.open
         needs_decode = True
 
@@ -37,7 +52,11 @@ def load_json(file: str):
     return item
 
 
-def load_jsonl(file: str):
+def load_jsonl(file: str) -> list[dict[str, Any]]:
+    """
+    Read and load JSONL or NDJSON files. These have a complete JSON record per line
+    """
+
     lines = load_text(file)
     items = []
     for line in lines:
@@ -46,10 +65,13 @@ def load_jsonl(file: str):
     return items
 
 
-def load_text(file: str):
+def load_text(file: str) -> list[str]:
+    """
+    Quickly load a text file to a list of lines
+    """
     openfn = open
     needs_decode = False
-    if file.endswith("gz"):
+    if file.endswith(GZIP):
         openfn = gzip.open
         needs_decode = True
 
@@ -64,30 +86,26 @@ def load_text(file: str):
     return items
 
 
-def load_csv(file: str, enc: str = ""):
+def load_csv(file: str, enc: Union[str, None] = None) -> list[dict[str, Any]]:
 
     # if the encoding isn't explicit
-    if enc = "":
+    if enc == "":
         enc = detect_bom(file)
 
-    # the resulting binary stream when opening with gzip.open needs to be handled
     # in a different manner than the other functions
 
-    if file.endswith("gz"):
-        print("Unsupported .gz extension. Manually gunzip first")
-        sys.exit(1)
-
+    lines = load_text(file)
     items = []
-    file_csv = csv.DictReader(open(file, mode="r", encoding=enc))
+    file_csv = csv.DictReader(lines)
     for row in file_csv:
         items.append(row)
 
     return items
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    # lines = load_text(sys.argv[1])
-    lines = load_csv(sys.argv[1])
+#     # lines = load_text(sys.argv[1])
+#     lines = load_csv(sys.argv[1])
 
-    print(lines)
+#     print(lines)

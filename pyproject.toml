@@ -1,21 +1,15 @@
 [project]
 name = "pyfileloader"
-version = "0.0.6"
+version = "0.0.8"
 description = "Load common JSON formats quickly, CSV too."
 readme = "README.md"
 requires-python = ">=3.7"
 keywords = ["json", "jsonl", "ndjson", "gzip", "fileloader"]
-authors = [
-  {email = "scott@invisiblethreat.ca"},
-  {name = "Scott Walsh"}
-]
-maintainers = [
-  {email = "scott@invisiblethreat.ca"},
-  {name = "Scott Walsh"}
-]
+authors = [{ email = "scott@invisiblethreat.ca" }, { name = "Scott Walsh" }]
+maintainers = [{ email = "scott@invisiblethreat.ca" }, { name = "Scott Walsh" }]
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Programming Language :: Python"
+  "Programming Language :: Python",
 ]
 
 [project.urls]

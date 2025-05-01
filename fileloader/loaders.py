@@ -5,7 +5,6 @@ Lightweigth file reader for common API outputs
 import csv
 import gzip
 import json
-import sys
 from typing import Any, Union
 
 GZIP = ".gz"
@@ -68,6 +67,9 @@ def load_jsonl(file: str) -> list[dict[str, Any]]:
 def load_text(file: str) -> list[str]:
     """
     Quickly load a text file to a list of lines
+
+    :param file: file to load
+    :return: list of lines
     """
     openfn = open
     needs_decode = False
@@ -87,6 +89,13 @@ def load_text(file: str) -> list[str]:
 
 
 def load_csv(file: str, enc: Union[str, None] = None) -> list[dict[str, Any]]:
+    """
+    Read and load CSV files. These have a complete JSON record per line
+
+    :param file: file to load
+    :param enc: encoding to use, if not provided, it will be detected
+    :return: list of dictionaries
+    """
 
     # if the encoding isn't explicit
     if enc == "":
@@ -101,11 +110,3 @@ def load_csv(file: str, enc: Union[str, None] = None) -> list[dict[str, Any]]:
         items.append(row)
 
     return items
-
-
-# if __name__ == "__main__":
-
-#     # lines = load_text(sys.argv[1])
-#     lines = load_csv(sys.argv[1])
-
-#     print(lines)

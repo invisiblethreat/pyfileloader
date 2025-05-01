@@ -1,7 +1,7 @@
 [project]
 name = "pyfileloader"
-version = "0.0.8"
-description = "Load common JSON formats quickly, CSV too."
+version = "0.0.9"
+description = "Load common JSON formats quickly, CSV too. Supports writing as well."
 readme = "README.md"
 requires-python = ">=3.7"
 keywords = ["json", "jsonl", "ndjson", "gzip", "fileloader"]

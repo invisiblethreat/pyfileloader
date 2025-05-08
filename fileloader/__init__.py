@@ -1,4 +1,5 @@
 from .loaders import load_csv, load_jsonl, load_text
+from .streamers import stream_jsonl, stream_text
 from .writers import write_jsonl_to_csv, write_list_to_csv
 
 __all__ = [
@@ -7,4 +8,6 @@ __all__ = [
     "load_jsonl",
     "write_jsonl_to_csv",
     "write_list_to_csv",
+    "stream_jsonl",
+    "stream_text",
 ]
